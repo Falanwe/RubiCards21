@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiCards21", "RubiCards21\RubiCards21.csproj", "{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bataille", "RubiCards21\Bataille.csproj", "{C1F119A4-F3F9-4CC3-8D02-6740C994B6A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1F119A4-F3F9-4CC3-8D02-6740C994B6A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1F119A4-F3F9-4CC3-8D02-6740C994B6A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1F119A4-F3F9-4CC3-8D02-6740C994B6A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1F119A4-F3F9-4CC3-8D02-6740C994B6A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {DD32082D-3555-4120-A06C-91EB266B0B08}
+		SolutionGuid = {44DAC972-018E-47D0-9213-F2BA5F970A54}
 	EndGlobalSection
 EndGlobal
