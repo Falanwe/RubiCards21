@@ -1,6 +1,6 @@
 ﻿namespace RubiCards21
 {
-	public enum CardSymbol : byte
+	public enum CardSuit : byte
 	{
 		Spades,
 		Hearts,
