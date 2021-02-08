@@ -2,7 +2,7 @@
 
 namespace RubiCards21
 {
-class Program
+    class Program
     {
         private static bool fastForward;
         
