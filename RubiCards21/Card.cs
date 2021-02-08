@@ -4,10 +4,10 @@ namespace Hura
 {
     public class Card : IComparable<Card>
     {
-        public Color Color;
-        public Value Value;
+        public CardSuit Color;
+        public CardValue Value;
 
-        public Card(Color color, Value value)
+        public Card(CardSuit color, CardValue value)
         {
             this.Color = color;
             this.Value = value;
@@ -87,7 +87,7 @@ namespace Hura
         #endregion
     }
 
-    public enum Color
+    public enum CardSuit
     {
         Cubs,
         Diamonds,
@@ -95,9 +95,9 @@ namespace Hura
         Spades
     }
 
-    public enum Value
+    public enum CardValue
     {
-        Two,
+        Two = 2,
         Three,
         Four,
         Five,

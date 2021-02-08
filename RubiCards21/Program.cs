@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hura
+namespace RubiCards21
 {
     internal class Program
     {
@@ -20,13 +20,13 @@ namespace Hura
         {
             Console.WriteLine("Enter card color : ");
             string userInput = Console.ReadLine();
-            Color cardColor;
+            CardSuit cardColor;
             
             while (!Enum.TryParse(userInput, true, out cardColor))
             {
                 Console.WriteLine("Invalid color, accepted colors : ");
                 
-                foreach (Color color in Enum.GetValues(typeof(Color)))
+                foreach (CardSuit color in Enum.GetValues(typeof(CardSuit)))
                 {
                     Console.WriteLine("- " + color);
                 }
@@ -38,13 +38,13 @@ namespace Hura
 
             Console.WriteLine("Enter card value : ");
             userInput = Console.ReadLine();
-            Value cardValue;
+            CardValue cardValue;
 
             while (!Enum.TryParse(userInput, true, out cardValue))
             {
                 Console.WriteLine("Invalid value, accepted values : ");
                 
-                foreach (Value color in Enum.GetValues(typeof(Value)))
+                foreach (CardValue color in Enum.GetValues(typeof(CardValue)))
                 {
                     Console.WriteLine("- " + color);
                 }
