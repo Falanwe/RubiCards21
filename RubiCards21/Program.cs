@@ -56,7 +56,7 @@ namespace RubiCards21
             
             Card card = new Card(cardColor, cardValue);
 
-            Console.WriteLine("[Created card : " + card.GetName() + "]");
+            Console.WriteLine("[Created card : " + card.ToString() + "]");
             
             return card;
         }

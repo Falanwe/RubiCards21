@@ -22,9 +22,9 @@ namespace RubiCards21
         {
             if (other.Value == this.Value)
             {
-                if (other.Suit == suit) return 0;
+                if (other.Suit == Suit) return 0;
 
-                if (other.Suit > suit) return -1;
+                if (other.Suit > Suit) return -1;
                 
                 return 1;
             }
