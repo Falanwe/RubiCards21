@@ -1,6 +1,6 @@
 ﻿namespace RubiCards21
 {
-	public enum CardValue : byte 
+	public enum StandardCardValue : byte 
 	{
 		Two,
 		Three,

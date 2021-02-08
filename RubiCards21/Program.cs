@@ -6,7 +6,24 @@ namespace RubiCards21
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var standardDeck = new StandardDeck();
+
+            standardDeck.AddDefaultCards();
+
+            Console.WriteLine("Exemple deck:");
+            Console.WriteLine(standardDeck);
+
+            var standardCard1 = new StandardCard(StandardCardValue.Queen, StandardCardSuit.Diamonds);
+            var standardCard2 = new StandardCard(StandardCardValue.King, StandardCardSuit.Hearts);
+
+            Console.WriteLine("Exemple card:");
+            Console.WriteLine(standardCard1);
+
+            Console.WriteLine("Battle card:");
+            if (standardCard2 > standardCard1)
+			{
+                Console.WriteLine(standardCard2.ToString() + " wins against " + standardCard1.ToString());
+            }
         }
     }
 }
