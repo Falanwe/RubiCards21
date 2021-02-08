@@ -86,29 +86,4 @@ namespace RubiCards21
         
         #endregion
     }
-
-    public enum CardSuit
-    {
-        Cubs,
-        Diamonds,
-        Hearts,
-        Spades
-    }
-
-    public enum CardValue
-    {
-        Two = 2,
-        Three,
-        Four,
-        Five,
-        Six,
-        Seven,
-        Height,
-        Nine,
-        Ten,
-        Jack,
-        Queen,
-        King,
-        Ace
-    }
 }
