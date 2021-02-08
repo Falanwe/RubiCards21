@@ -1,12 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RubiCards21
+namespace Bataille
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BattleGame game = new BattleGame();
+
+            while (!game.IsFinished)
+            {
+
+            }
+
+            Console.ReadKey();
         }
     }
 }
