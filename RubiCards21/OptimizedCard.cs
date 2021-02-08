@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace RubiCards21
 {
-    public class OptimizedCard
+    public class OptimizedCard : IComparable<ICard>, ICard
     {
         public OptimizedCard(Suit suit, CardValue value)
         {
@@ -19,5 +20,18 @@ namespace RubiCards21
         {
             return $"{Value} of {Suit}";
         }
+
+        private static byte? GetUnderlyingValue(ICard card)
+        {
+            switch (card)
+            {
+                case OptimizedCard optimized:
+                    return optimized._value;
+                default:
+                    return (byte)(4 * (int)card?.Value + (int)card?.Suit);
+            }
+        }            
+
+        public int CompareTo([AllowNull] ICard other) => _value.CompareTo(GetUnderlyingValue(other) ?? 0);
     }
 }
