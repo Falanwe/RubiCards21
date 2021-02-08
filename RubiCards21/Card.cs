@@ -2,7 +2,7 @@
 
 namespace RubiCards21
 {
-	public class Card : object, IComparable<Card>
+	public class Card : IComparable<Card>
 	{
 		public byte Value { get; } = 0;
 		public byte Suit { get; } = 0;
