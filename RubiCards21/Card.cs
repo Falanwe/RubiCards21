@@ -39,8 +39,7 @@ namespace Rubikards21
         
         public int CompareTo(Card other)
         {
-            if (Type == other.Type) return Value.CompareTo(other.Value);
-            return Type.CompareTo(other.Type);
+            return Value.CompareTo(other.Value);
         }
 
         public static bool operator > (Card first, Card second) => first.CompareTo(second) > 0;
@@ -53,5 +52,5 @@ namespace Rubikards21
         public static bool operator != (Card first, Card second) => first.CompareTo(second) != 0;
 
         public override string ToString() => $"{Value} of {Type}";
-    }    
+    }   
 }

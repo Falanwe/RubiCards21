@@ -9,10 +9,15 @@ namespace RubiCards21
         static void Main(string[] args)
         {
             var deck = CreateDeck();
+            Shuffle(deck);
 
             var halfLength = deck.Count / 2;
+            
             var firstDeck = new List<Card>(halfLength);
+            Shuffle(firstDeck);
+            
             var secondDeck = new List<Card>(halfLength);
+            Shuffle(secondDeck);
 
             for (var i = 0; i < deck.Count; i++)
             {
@@ -23,15 +28,29 @@ namespace RubiCards21
             ShowCommands();
             Console.WriteLine("The match between Jérome & Tom begins");
 
+            var round = 0;
+            var spoils = new List<Card>()
+            {
+                DrawFrom(firstDeck),
+                DrawFrom(secondDeck)
+            };
+            
             while (firstDeck.Any() && secondDeck.Any())
             {
-                var spoils = new Card[2]
+                Console.WriteLine($"Round {round} starts!");
+                
+                if (spoils[0] == spoils[1])
                 {
-                    DrawFrom(firstDeck),
-                    DrawFrom(secondDeck)
-                };
+                    Console.WriteLine($"{spoils[0]} is equal to {spoils[1]}, continuing round.");
 
-                if (spoils[0] == spoils[1]) throw new InvalidDataException("There should not be two of the same cards!");
+                    spoils.Add(DrawFrom(firstDeck));
+                    spoils.Add(DrawFrom(secondDeck));
+                    
+                    spoils.Insert(0, DrawFrom(firstDeck));
+                    spoils.Insert(0, DrawFrom(secondDeck));
+                    
+                    continue;
+                }
                 else
                 {
                     if (spoils[0] > spoils[1])
@@ -50,7 +69,17 @@ namespace RubiCards21
                 Console.WriteLine();
                 
                 if (!fastForward) ReadCommand();
+                
+                spoils.Clear();
+                spoils.Add(DrawFrom(firstDeck));
+                spoils.Add(DrawFrom(secondDeck));
+                
+                round++;
             }
+            
+            Console.WriteLine("The match is over.");
+            if (!secondDeck.Any()) Console.WriteLine("Jérome wins!");
+            else Console.WriteLine("Tom wins!");
         }
 
         private static List<Card> CreateDeck()
@@ -59,29 +88,29 @@ namespace RubiCards21
             var values = Enum.GetValues(typeof(Value)).Cast<Value>();
 
             var length = types.Count() * values.Count();
-            
             var deck = new List<Card>(length);
-            var indices = new List<int>(length);
-            for (var i = 0; i < length; i++)
-            {
-                deck.Add(default);
-                indices.Add(i);
-            }
-
-            var rnd = new Random();
+            
             foreach (var type in types)
             {
-                foreach (var value in values)
-                {
-                    var i = rnd.Next(0, indices.Count);
-                    var index = indices[i];
-                    indices.RemoveAt(i);
-                    
-                    deck[index] = new Card(type, value);
-                }
+                foreach (var value in values) deck.Add(new Card(type, value));
             }
 
             return deck;
+        }
+        private static void Shuffle(IList<Card> deck, int seed = 0)
+        {
+            var copy = new List<Card>(deck.Count);
+            foreach (var card in deck) copy.Add(card);
+
+            var rnd = new Random(seed == 0 ? DateTime.Now.Millisecond : seed);
+            for (var i = 0; i < deck.Count; i++)
+            {
+                var j = rnd.Next(0, copy.Count);
+                var card = copy[j];
+                copy.RemoveAt(j);
+
+                deck[i] = card;
+            }
         }
 
         private static Card DrawFrom(IList<Card> deck)
