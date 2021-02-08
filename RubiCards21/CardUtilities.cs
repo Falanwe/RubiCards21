@@ -12,6 +12,10 @@ namespace RubiCards21
         {
             ComparisonCount++;
         }
+        public static void ResetComparisionCount()
+        {
+            ComparisonCount = 0;
+        }
 
         private static readonly Random _rand = new Random();
 
