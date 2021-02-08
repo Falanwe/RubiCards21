@@ -19,6 +19,8 @@ namespace RubiCards21
 
         public int CompareTo([AllowNull] ICard other)
         {
+            CardUtilities.CountComparison();
+
             if (other == null)
             {
                 return 1;

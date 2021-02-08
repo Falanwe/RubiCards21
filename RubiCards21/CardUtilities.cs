@@ -6,6 +6,13 @@ namespace RubiCards21
 {
     public static class CardUtilities
     {
+        public static ulong ComparisonCount { get; private set; }
+
+        public static void CountComparison()
+        {
+            ComparisonCount++;
+        }
+
         private static readonly Random _rand = new Random();
 
         public static ICard RandomCard()
@@ -22,6 +29,14 @@ namespace RubiCards21
                 {
                     return new OptimizedCard(suit, value);
                 }
+            }
+        }
+
+        public static IEnumerable<ICard> RandomSet(int count)
+        {
+            for(var i = 0; i< count; i++)
+            {
+                yield return RandomCard();
             }
         }
 

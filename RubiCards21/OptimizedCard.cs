@@ -28,11 +28,15 @@ namespace RubiCards21
                 case OptimizedCard optimized:
                     return optimized._value;
                 default:
-                    return (byte)(4 * (int)card?.Value + (int)card?.Suit);
+                    return (byte?)(4 * (int?)card?.Value + (int?)card?.Suit);
             }
-        }            
+        }
 
-        public int CompareTo([AllowNull] ICard other) => _value.CompareTo(GetUnderlyingValue(other) ?? 0);
+        public int CompareTo([AllowNull] ICard other)
+        {
+            CardUtilities.CountComparison();
+            return _value.CompareTo(GetUnderlyingValue(other) ?? 0);
+        }
 
         public bool Equals([AllowNull] ICard other) => _value == GetUnderlyingValue(other);
 
