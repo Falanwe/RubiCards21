@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 
 namespace RubiCards21
@@ -38,29 +37,15 @@ namespace RubiCards21
 			}
 		}
 
-		public Card NewRandomCard()
-		{
-			var random = new Random();
-			byte randomValue = (byte)random.Next(Values.Length - 1);
-			byte randomSuit = (byte)random.Next(Suits.Length - 1);
-			return NewCard(randomValue, randomSuit);
-		}
-
 		public override string ToString()
 		{
 			StringBuilder stringBuilder = new StringBuilder();
-			var previousSuit = 0;
 			var iterator = GetEnumerator();
 			while (iterator.MoveNext())
 			{
 				var card = iterator.Current;
 				var suit = card.Suit;
 				var value = card.Value;
-				if (previousSuit != suit)
-				{
-					stringBuilder.AppendLine();
-					previousSuit = suit;
-				}
 				if (suit < 0 || suit >= Suits.Length || value < 0 || value >= Values.Length)
 				{
 					stringBuilder.AppendLine(card.ToString());

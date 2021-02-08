@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RubiCards21
+﻿namespace RubiCards21
 {
 	/// <summary>
 	/// Standard deck of 52 cards.

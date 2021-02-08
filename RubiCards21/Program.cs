@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RubiCards21
 {
@@ -12,6 +13,9 @@ namespace RubiCards21
 
             Console.WriteLine("Exemple deck:");
             Console.WriteLine(standardDeck);
+
+            Console.WriteLine("OrderBy deck:");
+            Console.WriteLine(standardDeck.OrderBy(x => x).ToDeck<StandardDeck>());
 
             var standardCard1 = new StandardCard(StandardCardValue.Queen, StandardCardSuit.Diamonds);
             var standardCard2 = new StandardCard(StandardCardValue.King, StandardCardSuit.Hearts);
