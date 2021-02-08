@@ -12,7 +12,7 @@ namespace RubiCards21
 
             var sorted = sorter.Sort(randomSet).ToArray();
 
-            Console.WriteLine($"I took {CardUtilities.ComparisonCount} comparison to sort the set.");
+            Console.WriteLine($"I took {CardUtilities.ComparisonCount:N0} comparison to sort the set.");
 
             ICard previous = null;
             foreach (var current in sorted)
@@ -21,6 +21,7 @@ namespace RubiCards21
                 {
                     throw new InvalidOperationException("Something went wrong in the sorting!");
                 }
+                previous = current;
             }
 
             Console.WriteLine($"The set looks ordered.");
