@@ -20,13 +20,13 @@ namespace Bataille
         public CardSet()
         {
             cards = new List<Card>();
-            rnd = new Random(DateTime.Now.Second);
+            rnd = new Random(Guid.NewGuid().GetHashCode());
         }
 
         public CardSet(int nbCard)
         {
             cards = new List<Card>(nbCard);
-            rnd = new Random(DateTime.Now.Second);
+            rnd = new Random(Guid.NewGuid().GetHashCode());
             FillSet();
         }
         #endregion
@@ -108,7 +108,7 @@ namespace Bataille
                     cards.Add(new Card(value, color));
                 }
             }
-        }        
+        }     
         #endregion
     }
 }
