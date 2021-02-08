@@ -14,7 +14,8 @@ namespace Bataille
 
             while (!game.IsFinished)
             {
-
+                game.Update();
+                game.Display();
             }
 
             Console.ReadKey();

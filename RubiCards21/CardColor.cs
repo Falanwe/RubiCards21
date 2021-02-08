@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Bataille
 {
-    public enum CardColor
+    public enum CardColor : byte
     {
-        Pique,
-        Coeur,
-        Carreau,
-        Trefle,
+        Clubs,
+        Diamonds,
+        Hearts,
+        Spades,
     }
 }

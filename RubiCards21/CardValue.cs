@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Bataille
 {
-    public enum CardValue
+    public enum CardValue : byte
     {
-        As = 14,
-        Roi = 13,
-        Dame = 12,
-        Valet = 11,
-        Dix = 10,
-        Neuf = 9,
-        Huit = 8,
-        Sept = 7,
-        Six = 6,
-        Cinq = 5,
-        Quatre = 4,
-        Trois = 3,
-        Deux = 2,
+        Two = 2,
+        Three,
+        Four,
+        Five,
+        Six,
+        Seven,
+        Eight,
+        Nine,
+        Ten,
+        Jack,
+        Queen,
+        King,
+        Ace
     }
 }
