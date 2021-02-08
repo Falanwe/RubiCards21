@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace RubiCards21
 {
@@ -6,14 +7,14 @@ namespace RubiCards21
     {
         public static void Main(string[] args)
         {
-            Card cardA = UserCreateCard();
-            Card cardB = UserCreateCard();
-            Console.WriteLine(GetGreatest(cardA, cardB).ToString());
-        }
-
-        public static Card GetGreatest(Card cardA, Card cardB)
-        {
-            return cardA > cardB ? cardA : cardB;
+            CardHand hand = new CardHand(10);
+            ISorter sorter = new CardStrengthSorter();
+            hand.ResetHand(sorter.Sort(hand.Cards).ToArray());
+            foreach (var card in hand.Cards)
+            {
+                Console.WriteLine(card.ToString());
+            }
+            return;
         }
 
         public static Card UserCreateCard()

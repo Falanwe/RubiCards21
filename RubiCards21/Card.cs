@@ -13,6 +13,13 @@ namespace RubiCards21
             this.Value = value;
         }
 
+        public static Card Random()
+        {
+            CardSuit suit = CardUtility.GetRandomSuit();
+            CardValue value = CardUtility.GetRandomValue();
+            return new Card(suit, value);
+        }
+
         public override string ToString()
         {
             return this.Value + " of " + this.Suit;
