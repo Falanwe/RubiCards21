@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RubiCards21
 {
-    public class Card : IComparable<ICard>, ICard
+    public class Card : ICard
     {
         public Card(Suit suit, CardValue value)
         {
@@ -53,5 +53,19 @@ namespace RubiCards21
         {
             return $"{Value} of {Suit}";
         }
+
+        public bool Equals([AllowNull] ICard other) => other != null && Value == other.Value && Suit == other.Suit;
+
+        public override bool Equals(object obj) => Equals(obj as ICard);
+
+        public override int GetHashCode() => (int)Suit * 1500450271 + (int)Value;
+
+        public static bool operator >(Card card1, ICard card2) => CardUtilities.IsGreater(card1, card2);
+        public static bool operator <(Card card1, ICard card2) => CardUtilities.IsLesser(card1, card2);
+        public static bool operator >=(Card card1, ICard card2) => !CardUtilities.IsLesser(card1, card2);
+        public static bool operator <=(Card card1, ICard card2) => !CardUtilities.IsGreater(card1, card2);
+
+        public static bool operator ==(Card card1, ICard card2) => CardUtilities.IsEqual(card1, card2);
+        public static bool operator !=(Card card1, ICard card2) => !CardUtilities.IsEqual(card1, card2);
     }
 }

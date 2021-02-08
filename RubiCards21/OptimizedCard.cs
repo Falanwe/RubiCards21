@@ -33,5 +33,18 @@ namespace RubiCards21
         }            
 
         public int CompareTo([AllowNull] ICard other) => _value.CompareTo(GetUnderlyingValue(other) ?? 0);
+
+        public bool Equals([AllowNull] ICard other) => _value == GetUnderlyingValue(other);
+
+        public override bool Equals(object obj) => Equals(obj as ICard);
+        public override int GetHashCode() => (int)Suit * 1500450271 + (int)Value;
+
+        public static bool operator >(OptimizedCard card1, ICard card2) => CardUtilities.IsGreater(card1, card2);
+        public static bool operator <(OptimizedCard card1, ICard card2) => CardUtilities.IsLesser(card1, card2);
+        public static bool operator >=(OptimizedCard card1, ICard card2) => !CardUtilities.IsLesser(card1, card2);
+        public static bool operator <=(OptimizedCard card1, ICard card2) => !CardUtilities.IsGreater(card1, card2);
+
+        public static bool operator ==(OptimizedCard card1, ICard card2) => CardUtilities.IsEqual(card1, card2);
+        public static bool operator !=(OptimizedCard card1, ICard card2) => !CardUtilities.IsEqual(card1, card2);
     }
 }

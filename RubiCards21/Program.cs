@@ -24,6 +24,11 @@ namespace RubiCards21
             {
                 Console.WriteLine($"{hand[i]} is {(hand[i].CompareTo(hand[i + 1]) > 0 ? "greater" : "lesser")} than {hand[i + 1]}");
             }
+
+            var card1 = new Card(Suit.Clubs, CardValue.Ace);
+            var card2 = card2;
+
+            Console.WriteLine(card1 == card2);
         }
     }
 }
