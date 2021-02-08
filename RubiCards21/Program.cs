@@ -8,7 +8,7 @@ namespace RubiCards21
         {
             Card cardA = UserCreateCard();
             Card cardB = UserCreateCard();
-            Console.WriteLine(GetGreatest(cardA, cardB).GetName());
+            Console.WriteLine(GetGreatest(cardA, cardB).ToString());
         }
 
         public static Card GetGreatest(Card cardA, Card cardB)

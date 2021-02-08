@@ -1,30 +1,30 @@
 ﻿using System;
 
-namespace Hura
+namespace RubiCards21
 {
     public class Card : IComparable<Card>
     {
-        public CardSuit Color;
-        public CardValue Value;
+        public CardSuit Suit { get; }
+        public CardValue Value { get; }
 
-        public Card(CardSuit color, CardValue value)
+        public Card(CardSuit suit, CardValue value)
         {
-            this.Color = color;
+            this.Suit = suit;
             this.Value = value;
         }
 
-        public string GetName()
+        public override string ToString()
         {
-            return this.Value + " of " + this.Color;
+            return this.Value + " of " + this.Suit;
         }
 
         public int CompareTo(Card other)
         {
             if (other.Value == this.Value)
             {
-                if (other.Color == this.Color) return 0;
+                if (other.Suit == suit) return 0;
 
-                if (other.Color > this.Color) return -1;
+                if (other.Suit > suit) return -1;
                 
                 return 1;
             }
@@ -61,7 +61,7 @@ namespace Hura
 
         public override int GetHashCode()
         {
-            return  (int)this.Color*100 + (int)this.Value;
+            return  (int)this.Suit*100 + (int)this.Value;
         }
         
         public static bool operator ==(Card cardA, Card cardB)
