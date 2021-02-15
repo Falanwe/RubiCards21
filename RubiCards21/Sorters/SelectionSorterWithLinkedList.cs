@@ -7,7 +7,7 @@ namespace RubiCards21.Sorters
 {
     public class SelectionSorterWithLinkedList : ISorter
     {
-        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : IComparable<T>
+        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : class, IComparable<T>
         {
             var copy = new LinkedList<T>(setToSort);
 

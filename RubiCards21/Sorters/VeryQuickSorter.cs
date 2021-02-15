@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace RubiCards21.Sorters
 {
@@ -8,7 +9,7 @@ namespace RubiCards21.Sorters
     {
         private static ulong comparisons = 0;
 
-        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : IComparable<T>
+        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : class, IComparable<T>
         {
             var array = setToSort.ToArray();
             Sort(array, 0, array.Length - 1);
@@ -18,7 +19,7 @@ namespace RubiCards21.Sorters
             return array;
         }
 
-        private void Sort<T>(T[] array, int l, int r) where T : IComparable<T>
+        private void Sort<T>(T[] array, int l, int r) where T : class, IComparable<T>
         {
             int i, j;
             T x;
@@ -50,9 +51,10 @@ namespace RubiCards21.Sorters
 
                 if (i <= j)
                 {
-                    var copy = array[j];
-                    array[j] = array[i];
-                    array[i] = copy;
+                    array[j] = Interlocked.Exchange(ref array[i], array[j]);
+                    //var copy = array[j];
+                    //array[j] = array[i];
+                    //array[i] = copy;
 
                     i++;
                     j--;

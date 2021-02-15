@@ -6,7 +6,7 @@ namespace RubiCards21.Sorters
 {
     public class InsertionSorter : ISorter
     {
-        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : IComparable<T>
+        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : class, IComparable<T>
         {
             var result = new LinkedList<T>();
             

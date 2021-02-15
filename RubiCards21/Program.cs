@@ -29,12 +29,17 @@ namespace RubiCards21
 
         static void Main(string[] args)
         {
-            var randomSet = CardUtilities.RandomSet(10_000).ToArray();
+            var randomSet = CardUtilities.RandomSet(1_000_000).ToArray();
 
-            TestSorter(randomSet, new SelectionSorter());
-            TestSorter(randomSet, new SelectionSorterWithLinkedList());
-            TestSorter(randomSet, new SelectionSorterWithArray());
-            TestSorter(randomSet, new InsertionSorter());
+            //TestSorter(randomSet, new SelectionSorter());
+            //TestSorter(randomSet, new SelectionSorterWithLinkedList());
+            //TestSorter(randomSet, new SelectionSorterWithArray());
+            //TestSorter(randomSet, new InsertionSorter());
+            //TestSorter(randomSet, new BubbleSorter());
+            TestSorter(randomSet, new FusionSort());
+            TestSorter(randomSet, new QuickSorter());
+            TestSorter(randomSet, new VeryQuickSorter());
+
             TestSorter(randomSet, new BestSorter());
             
 

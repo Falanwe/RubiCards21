@@ -31,7 +31,7 @@ namespace RubiCards21.Sorters
             return result;
         }
 
-        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : IComparable<T>
+        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : class, IComparable<T>
         {
             var copy = setToSort.ToList();
 

@@ -7,7 +7,7 @@ namespace RubiCards21.Sorters
 {
     public class QuickSorter : ISorter
     {
-        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : IComparable<T>
+        public IEnumerable<T> Sort<T>(IEnumerable<T> setToSort) where T : class, IComparable<T>
         {
             if (!setToSort.Skip(1).Any())
             {
