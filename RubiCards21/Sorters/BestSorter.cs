@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace RubiCards21
+namespace RubiCards21.Sorters
 {
     public class BestSorter : ISorter
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RubiCards21
+namespace RubiCards21.Sorters
 {
     public interface ISorter
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace RubiCards21
+namespace RubiCards21.Sorters
 {
     public class VeryQuickSorter : ISorter
     {
