@@ -1,96 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Numerics;
-using System.Threading;
+using System.Text;
 
 namespace AynchroSample
 {
-    class Program
+    public static class Program
     {
-        private static bool _isRunning = true;
+        private static string[] _words = { "sucette", "patate", "Noël", "couscous" };
+        private static Random _rand = new Random();
+        private static string RandomWord() => _words[_rand.Next(4)];
 
-        private static IEnumerable<BigInteger> Fibo()
+        public static void Main(string[] args)
         {
-            BigInteger previous = 1;
-            BigInteger current = 1;
-            yield return previous;
-            yield return current;
-            while (true)
-            {
-                var next = previous + current;
-                yield return next;
-                previous = current;
-                current = next;
-            }
-        }
+            //var delegateExemples = new DelegatesExemples();
 
-        private static void EnumerateFibo(object _)
-        {
-            foreach (var f in Fibo())
-            {
-                if (!_isRunning)
-                {
-                    return;
-                }
-                Console.WriteLine(f);
-                Thread.Sleep(100);
-            }
-        }
+            //delegateExemples.Prefix = "Chan";
+            //delegateExemples.Suffix = "Tho";
+            //var generator = delegateExemples.DecorateStringFactory(RandomWord);
 
-        private static event Action<char> _onKeyPressed;
-        static void Main(string[] args)
-        {
-            bool aPressed = false;
-            bool bPressed = false;
-            bool cPressed = false;
+            //Console.WriteLine(generator());
+            //Console.ReadLine();
 
-            void OnAPressed(char key)
-            {
-                if (key == 'a')
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("You pressed A!");
-                    aPressed = true;
-                }
-            }
+            //delegateExemples.Prefix = "1";
+            //delegateExemples.Suffix = "2";
+            //Console.WriteLine(generator());
 
-            void OnBPressed(char key)
-            {
-                if (key == 'b')
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("You pressed B!");
-                    bPressed = true;
-                }
-            }
-            void OnCPressed(char key)
-            {
-                if (key == 'c')
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("You pressed C!");
-                    cPressed = true;
-                }
-            }
+            var tupleSample = new TupleSample();
 
-            _onKeyPressed += OnAPressed;
-            _onKeyPressed += OnBPressed;
-            _onKeyPressed += OnCPressed;
-
-            while (true)
-            {
-                var key = Console.ReadKey();
-                _onKeyPressed?.Invoke(key.KeyChar);
-
-                if (aPressed && bPressed && cPressed)
-                {
-                    _isRunning = false;
-                    Console.WriteLine("A winner is you");
-                    Console.WriteLine("Press enter to exit");
-                    Console.ReadLine();
-                    return;
-                }
-            }
+            tupleSample.SwitchTest(Move.Paper, Move.Scissor);
+            tupleSample.SwitchTest(Move.Scissor, Move.Paper);
+            tupleSample.SwitchTest(Move.Rock, Move.Rock);
         }
     }
 }
