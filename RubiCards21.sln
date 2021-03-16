@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RubiCards21", "RubiCards21\RubiCards21.csproj", "{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubiCards21", "RubiCards21\RubiCards21.csproj", "{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AynchroSample", "AynchroSample\AynchroSample.csproj", "{1156D0E2-C1D9-43D5-A054-821A55ABA17E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
