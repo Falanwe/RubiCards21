@@ -25,11 +25,13 @@ namespace AynchroSample
             //delegateExemples.Suffix = "2";
             //Console.WriteLine(generator());
 
-            var tupleSample = new TupleSample();
+            //var tupleSample = new TupleSample();
 
-            tupleSample.SwitchTest(Move.Paper, Move.Scissor);
-            tupleSample.SwitchTest(Move.Scissor, Move.Paper);
-            tupleSample.SwitchTest(Move.Rock, Move.Rock);
+            //tupleSample.SwitchTest(Move.Paper, Move.Scissor);
+            //tupleSample.SwitchTest(Move.Scissor, Move.Paper);
+            //tupleSample.SwitchTest(Move.Rock, Move.Rock);
+
+            AsyncSample.Execute();
         }
     }
 }

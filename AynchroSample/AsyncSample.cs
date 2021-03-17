@@ -38,11 +38,12 @@ namespace AynchroSample
         }
 
         private static event Action<char> _onKeyPressed;
-        static void Execute()
+        public static void Execute()
         {
             bool aPressed = false;
             bool bPressed = false;
             bool cPressed = false;
+            bool lost = false;
 
             void OnAPressed(char key)
             {
@@ -51,7 +52,29 @@ namespace AynchroSample
                     Console.WriteLine();
                     Console.WriteLine("You pressed A!");
                     aPressed = true;
+
+                    Console.WriteLine("You can now only press 10 keys");
+                    _onKeyPressed -= OnAPressed;
+
+                    StartCountDown(10, YouLose);
                 }
+            }
+
+            void YouLose()
+            {
+                lost = true;
+            }
+
+            void StartCountDown(int keyStrokes, Action continuation)
+            {
+                _onKeyPressed += _ =>
+                {
+                    keyStrokes--;
+                    if(keyStrokes == 0)
+                    {
+                        continuation();
+                    }
+                };
             }
 
             void OnBPressed(char key)
@@ -61,6 +84,8 @@ namespace AynchroSample
                     Console.WriteLine();
                     Console.WriteLine("You pressed B!");
                     bPressed = true;
+
+                    _onKeyPressed -= OnBPressed;
                 }
             }
             void OnCPressed(char key)
@@ -70,12 +95,15 @@ namespace AynchroSample
                     Console.WriteLine();
                     Console.WriteLine("You pressed C!");
                     cPressed = true;
+
+                    _onKeyPressed -= OnCPressed;
                 }
             }
 
             _onKeyPressed += OnAPressed;
             _onKeyPressed += OnBPressed;
             _onKeyPressed += OnCPressed;
+            
 
             while (true)
             {
@@ -90,7 +118,17 @@ namespace AynchroSample
                     Console.ReadLine();
                     return;
                 }
+                if (lost)
+                {
+                    _isRunning = false;
+                    Console.WriteLine();
+                    Console.WriteLine("you lost");
+                    Console.WriteLine("Press enter to exit");
+                    Console.ReadLine();
+                    return;
+                }
             }
         }
+
     }
 }
