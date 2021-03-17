@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -31,7 +32,9 @@ namespace AynchroSample
             //tupleSample.SwitchTest(Move.Scissor, Move.Paper);
             //tupleSample.SwitchTest(Move.Rock, Move.Rock);
 
-            AsyncSample.Execute();
+            //AsyncSample.Execute();
+
+            TaskSample.Execute();
         }
     }
 }
