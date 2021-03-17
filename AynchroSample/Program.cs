@@ -34,7 +34,7 @@ namespace AynchroSample
 
             //AsyncSample.Execute();
 
-            TaskSample.Execute().Wait();
+            TearingSample.Execute1();
         }
     }
 }

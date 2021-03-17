@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AynchroSample
@@ -55,9 +57,59 @@ namespace AynchroSample
             return Regex.Matches(text, "google", RegexOptions.IgnoreCase).Count;
         }
 
-        public static async Task Execute()
+        private static bool _shouldRun = true;
+        private static async Task WriteAfterTaskCompleted(Task<DateTime> task)
         {
-            Console.WriteLine(await CountGooglesInGoogle());
+            var time = await task.ConfigureAwait(false);
+            Console.WriteLine($"The task completed at {time}!");
+            _shouldRun = false;
+        }
+
+        private static readonly Random _rand = new Random();
+
+        private static async Task<int> WaitRandomly()
+        {
+            var delay = _rand.Next(2000);
+            await Task.Delay(delay);
+            return delay;
+        }
+
+        public static void Execute()
+        {
+            var aPressedTaskCompletionSource = new TaskCompletionSource<DateTime>();
+
+            var _ = WriteAfterTaskCompleted(aPressedTaskCompletionSource.Task);
+            _ = WriteAfterTaskCompleted(Task.Run(() =>
+            {
+                Thread.Sleep(200);
+                return DateTime.UtcNow;
+            }));
+
+            while (_shouldRun)
+            {
+                if (Console.ReadKey().KeyChar == 'a')
+                {
+                    aPressedTaskCompletionSource.SetResult(DateTime.UtcNow);
+                }
+            }
+            Console.WriteLine("End of Program");
+            Console.ReadLine();
+        }
+
+        public static async IAsyncEnumerable<int> WaitRandomlyManyTimes(int n)
+        {
+            for (var i = 0; i < n; i++)
+            {
+                yield return await WaitRandomly();
+            }
+        }
+
+        public static async Task Execute1()
+        {
+            await foreach (var delay in WaitRandomlyManyTimes(10))
+            {
+                Console.WriteLine($"I waited {delay} ms");
+            }
         }
     }
 }
