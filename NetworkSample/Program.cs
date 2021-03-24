@@ -8,7 +8,11 @@ namespace NetworkSample.Server
     {
         static async Task Main(string[] args)
         {
-            var ordering = new RandomOrdering(byte.Parse(args[0]));
+            RandomOrdering ordering;
+            do
+            {
+                ordering = new RandomOrdering(byte.Parse(args[0]));
+            } while (!ordering.IsFavorable);
 
             using var udpClient = new UdpClient(666);
             var udpReceiveResult = await udpClient.ReceiveAsync();
