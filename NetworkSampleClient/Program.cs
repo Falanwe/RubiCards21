@@ -9,7 +9,7 @@ namespace NetworkSample.Client
     {
         static async Task Main(string[] args)
         {
-            var client = new UdpClient();
+            using var client = new UdpClient();
             byte position = 3;
             await client.SendAsync(new byte[] { position }, 1, new System.Net.IPEndPoint(IPAddress.Parse("127.0.0.1"), 666));
 

@@ -15,14 +15,17 @@ namespace NetworkSample.Server
             } while (!ordering.IsFavorable);
 
             using var udpClient = new UdpClient(666);
-            var udpReceiveResult = await udpClient.ReceiveAsync();
+            while (true)
+            {                
+                var udpReceiveResult = await udpClient.ReceiveAsync();
 
-            var index = udpReceiveResult.Buffer[0];
-            var response = ordering.LookAt(index);            
+                var index = udpReceiveResult.Buffer[0];
+                var response = ordering.LookAt(index);
 
-            await udpClient.SendAsync(new byte[] { response }, 1, udpReceiveResult.RemoteEndPoint);
+                await udpClient.SendAsync(new byte[] { response }, 1, udpReceiveResult.RemoteEndPoint);
 
-            Console.WriteLine($"client asked for position {index}. I responded {response}");
+                Console.WriteLine($"client asked for position {index}. I responded {response}");
+            }
         }
     }
 }
