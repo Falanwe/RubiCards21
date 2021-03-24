@@ -10,12 +10,29 @@ namespace NetworkSample.Client
         static async Task Main(string[] args)
         {
             using var client = new UdpClient();
-            byte position = 3;
-            await client.SendAsync(new byte[] { position }, 1, new System.Net.IPEndPoint(IPAddress.Parse("127.0.0.1"), 666));
-
+            var remoteEndPoint = new System.Net.IPEndPoint(IPAddress.Parse("127.0.0.1"), 666);
+            await client.SendAsync(new byte[] { 0 }, 1, remoteEndPoint);
             var udpReceiveResult = await client.ReceiveAsync();
+            var myIndex = udpReceiveResult.Buffer[0];
+            Console.WriteLine($"My own index is {myIndex}");
 
-            Console.WriteLine($"In position {position} there is the value {udpReceiveResult.Buffer[0]}");
+            for (byte index = 1; index < 9; index++)
+            {
+                await client.SendAsync(new byte[] { 1, index }, 2, remoteEndPoint);
+                udpReceiveResult = await client.ReceiveAsync();
+                var returnValue = udpReceiveResult.Buffer[0];
+                Console.WriteLine($"At position {index} there is the value {returnValue}");
+
+                if (returnValue == myIndex)
+                {
+                    Console.WriteLine($"I won");
+                    Console.ReadLine();
+                    return;
+                }
+            }
+
+            Console.WriteLine($"I lost");
+            Console.ReadLine();
         }
     }
 }
