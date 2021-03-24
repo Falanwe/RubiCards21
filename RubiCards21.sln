@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubiCards21", "RubiCards21\RubiCards21.csproj", "{28919EBE-D52F-4B36-9F01-D9A8010CD4D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AynchroSample", "AynchroSample\AynchroSample.csproj", "{1156D0E2-C1D9-43D5-A054-821A55ABA17E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AynchroSample", "AynchroSample\AynchroSample.csproj", "{1156D0E2-C1D9-43D5-A054-821A55ABA17E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSample.Server", "NetworkSample\NetworkSample.Server.csproj", "{F20F07BC-D8B6-4327-B799-D42224BA249D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSampleClient", "NetworkSampleClient\NetworkSampleClient.csproj", "{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1156D0E2-C1D9-43D5-A054-821A55ABA17E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F20F07BC-D8B6-4327-B799-D42224BA249D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F20F07BC-D8B6-4327-B799-D42224BA249D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F20F07BC-D8B6-4327-B799-D42224BA249D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F20F07BC-D8B6-4327-B799-D42224BA249D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
