@@ -10,12 +10,14 @@ namespace NetworkSample.Client
         public static async Task Main(string[] args)
         {
             await TcpClient();
+            await UdpClient();
+            Console.ReadLine();
         }
 
         private static async Task UdpClient()
         {
             using var client = new UdpClient();
-            var remoteEndPoint = new System.Net.IPEndPoint(IPAddress.Parse("127.0.0.1"), 666);
+            var remoteEndPoint = new System.Net.IPEndPoint(IPAddress.Parse("10.51.2.23"), 666);
             await client.SendAsync(new byte[] { 0 }, 1, remoteEndPoint);
             var udpReceiveResult = await client.ReceiveAsync();
             var myIndex = udpReceiveResult.Buffer[0];
@@ -37,13 +39,12 @@ namespace NetworkSample.Client
             }
 
             Console.WriteLine($"I lost");
-            Console.ReadLine();
         }
 
         private static async Task TcpClient()
         {
             using var client = new TcpClient();
-            await client.ConnectAsync(IPAddress.Parse("127.0.0.1"), 666);
+            await client.ConnectAsync(IPAddress.Parse("10.51.2.23"), 666);
             using var stream = client.GetStream();
 
             var myIndex = (byte)stream.ReadByte();
@@ -65,7 +66,6 @@ namespace NetworkSample.Client
             }
 
             Console.WriteLine($"I lost");
-            Console.ReadLine();
         }
     }
 }

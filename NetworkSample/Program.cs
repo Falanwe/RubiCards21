@@ -10,23 +10,26 @@ namespace NetworkSample.Server
     {
         static async Task Main(string[] args)
         {
+            var addresses = new List<IPAddress>();
 
             RandomOrdering ordering;
             do
             {
                 ordering = new RandomOrdering(byte.Parse(args[0]));
             } while (!ordering.IsFavorable);
-            //await ServeWithUdp(ordering);
-            await ServeWithTcp(ordering);
+            var t1 = ServeWithUdp(addresses, ordering);
+            var t2 = ServeWithTcp(addresses, ordering);
+
+            await t1;
+            await t2;
         }
 
-        private static async Task ServeWithTcp(RandomOrdering ordering)
+        private static async Task ServeWithTcp(List<IPAddress> addresses, RandomOrdering ordering)
         {
-            var addresses = new List<IPAddress>();
-
             var tcpListener = new TcpListener(new IPAddress(0), 666);
             tcpListener.Start();
 
+            Console.WriteLine("waiting for TCP clients");
             while (true)
             {
                 _ = ServeClient(await tcpListener.AcceptTcpClientAsync());
@@ -40,16 +43,20 @@ namespace NetworkSample.Server
 
                     using var stream = client.GetStream();
                     var address = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
-                    var index = addresses.IndexOf(address);
-                    if (index == -1)
+                    int index;
+                    lock (addresses)
                     {
-                        addresses.Add(address);
-                        index = addresses.Count - 1;
-                        Console.WriteLine($"a new client connected. I assigned to them the index {index}");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"a known client connected. I assigned to them the index {index}");
+                        index = addresses.IndexOf(address);
+                        if (index == -1)
+                        {
+                            addresses.Add(address);
+                            index = addresses.Count - 1;
+                            Console.WriteLine($"a new TCP client connected. I assigned to them the index {index}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"a known TCP client connected. I assigned to them the index {index}");
+                        }
                     }
 
                     stream.WriteByte((byte)index);
@@ -57,11 +64,11 @@ namespace NetworkSample.Server
                     for (var askedIndex = stream.ReadByte(); askedIndex != -1; askedIndex = stream.ReadByte())
                     {
                         var response = ordering.LookAt((byte)askedIndex);
-                        Console.WriteLine($"client {index} asked for position {askedIndex}. I responded {response}");
+                        Console.WriteLine($"TCP client {index} asked for position {askedIndex}. I responded {response}");
                         stream.WriteByte(response);
                     }
 
-                    Console.WriteLine($"user {index} disconnected.");
+                    Console.WriteLine($"TCP client {index} disconnected.");
                 }
                 finally
                 {
@@ -70,11 +77,13 @@ namespace NetworkSample.Server
             }
         }
 
-        private static async Task ServeWithUdp(RandomOrdering ordering)
+        private static async Task ServeWithUdp(List<IPAddress> addresses, RandomOrdering ordering)
         {
-            var addresses = new List<IPAddress>();
+            new List<IPAddress>();
 
             var udpClient = new UdpClient(666);
+            Console.WriteLine("waiting for UDP clients");
+
             while (true)
             {
                 var udpReceiveResult = await udpClient.ReceiveAsync();
@@ -84,21 +93,24 @@ namespace NetworkSample.Server
                 {
                     case 0:
                         {
-                            var index = addresses.IndexOf(udpReceiveResult.RemoteEndPoint.Address);
-                            if (index == -1)
+                            int index;
+                            lock (addresses)
                             {
-                                addresses.Add(udpReceiveResult.RemoteEndPoint.Address);
-                                index = addresses.Count - 1;
-                                await udpClient.SendAsync(new byte[] { (byte)index }, 1, udpReceiveResult.RemoteEndPoint);
-                                Console.WriteLine($"a new client sent a message. I assigned to them the index {index}");
+                                index = addresses.IndexOf(udpReceiveResult.RemoteEndPoint.Address);
+                                if (index == -1)
+                                {
+                                    addresses.Add(udpReceiveResult.RemoteEndPoint.Address);
+                                    index = addresses.Count - 1;
+                                    Console.WriteLine($"a new UDP client sent a message. I assigned to them the index {index}");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"a known UDP client sent a message. I assigned to them the index {index}");
+                                }
                             }
-                            else
-                            {
-                                await udpClient.SendAsync(new byte[] { (byte)index }, 1, udpReceiveResult.RemoteEndPoint);
-                                Console.WriteLine($"a known client sent a message. I assigned to them the index {index}");
-                            }
-                            break;
+                            await udpClient.SendAsync(new byte[] { (byte)index }, 1, udpReceiveResult.RemoteEndPoint);
                         }
+                        break;
                     case 1:
                         {
                             var index = udpReceiveResult.Buffer[1];
@@ -106,11 +118,10 @@ namespace NetworkSample.Server
 
                             await udpClient.SendAsync(new byte[] { response }, 1, udpReceiveResult.RemoteEndPoint);
 
-                            Console.WriteLine($"client asked for position {index}. I responded {response}");
+                            Console.WriteLine($"Some UDP client asked for position {index}. I responded {response}");
                             break;
                         }
                 }
-
             }
         }
     }
