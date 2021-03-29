@@ -10,15 +10,71 @@ namespace NetworkSample.Server
     {
         static async Task Main(string[] args)
         {
-            var addresses = new List<IPAddress>();
 
             RandomOrdering ordering;
             do
             {
                 ordering = new RandomOrdering(byte.Parse(args[0]));
             } while (!ordering.IsFavorable);
+            //await ServeWithUdp(ordering);
+            await ServeWithTcp(ordering);
+        }
 
-            using var udpClient = new UdpClient(666);
+        private static async Task ServeWithTcp(RandomOrdering ordering)
+        {
+            var addresses = new List<IPAddress>();
+
+            var tcpListener = new TcpListener(new IPAddress(0), 666);
+            tcpListener.Start();
+
+            while (true)
+            {
+                _ = ServeClient(await tcpListener.AcceptTcpClientAsync());
+            }
+
+            async Task ServeClient(TcpClient client)
+            {
+                try
+                {
+                    await Task.Yield();
+
+                    using var stream = client.GetStream();
+                    var address = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+                    var index = addresses.IndexOf(address);
+                    if (index == -1)
+                    {
+                        addresses.Add(address);
+                        index = addresses.Count - 1;
+                        Console.WriteLine($"a new client connected. I assigned to them the index {index}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"a known client connected. I assigned to them the index {index}");
+                    }
+
+                    stream.WriteByte((byte)index);
+
+                    for (var askedIndex = stream.ReadByte(); askedIndex != -1; askedIndex = stream.ReadByte())
+                    {
+                        var response = ordering.LookAt((byte)askedIndex);
+                        Console.WriteLine($"client {index} asked for position {askedIndex}. I responded {response}");
+                        stream.WriteByte(response);
+                    }
+
+                    Console.WriteLine($"user {index} disconnected.");
+                }
+                finally
+                {
+                    client.Dispose();
+                }
+            }
+        }
+
+        private static async Task ServeWithUdp(RandomOrdering ordering)
+        {
+            var addresses = new List<IPAddress>();
+
+            var udpClient = new UdpClient(666);
             while (true)
             {
                 var udpReceiveResult = await udpClient.ReceiveAsync();
@@ -33,7 +89,7 @@ namespace NetworkSample.Server
                             {
                                 addresses.Add(udpReceiveResult.RemoteEndPoint.Address);
                                 index = addresses.Count - 1;
-                                await udpClient.SendAsync(new byte[] { (byte)index } , 1, udpReceiveResult.RemoteEndPoint);
+                                await udpClient.SendAsync(new byte[] { (byte)index }, 1, udpReceiveResult.RemoteEndPoint);
                                 Console.WriteLine($"a new client sent a message. I assigned to them the index {index}");
                             }
                             else
