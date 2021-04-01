@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSample.Server", "Net
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSampleClient", "NetworkSampleClient\NetworkSampleClient.csproj", "{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebService", "SampleWebService\SampleWebService.csproj", "{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
