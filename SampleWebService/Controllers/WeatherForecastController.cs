@@ -29,23 +29,25 @@ namespace SampleWebService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
-        => _cache.GetOrSet(() =>
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return await _cache.GetOrSet(() =>
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
-        });
+                var rng = new Random();
+                return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(index),
+                    TemperatureC = rng.Next(-20, 55),
+                    Summary = Summaries[rng.Next(Summaries.Length)]
+                })
+                .ToArray();
+            });
+        }
 
         [HttpPost("EmptyCache")]
-        public void EmptyCache()
+        public async Task EmptyCache()
         {
-            _cache.Empty();
+            await _cache.Empty();
         }
     }
 }

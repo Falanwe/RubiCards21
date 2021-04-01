@@ -9,7 +9,7 @@ namespace SampleWebService.Services
     {
         private IEnumerable<WeatherForecast>? _cachedValue;
         private readonly object _syncRoot = new object();
-        public IEnumerable<WeatherForecast> GetOrSet(Func<IEnumerable<WeatherForecast>> factory)
+        public Task<IEnumerable<WeatherForecast>> GetOrSet(Func<IEnumerable<WeatherForecast>> factory)
         {
             IEnumerable<WeatherForecast>? cachedValue = _cachedValue;
             if (cachedValue == null)
@@ -24,15 +24,16 @@ namespace SampleWebService.Services
                 }
             }
 
-            return cachedValue!;
+            return Task.FromResult(cachedValue);
         }
 
-        public void Empty()
+        public Task Empty()
         {
             lock (_syncRoot)
             {
                 _cachedValue = null;
             }
+            return Task.CompletedTask;
         }
     }
 }
