@@ -11,7 +11,8 @@ namespace SampleWebService.Services
         private readonly object _syncRoot = new object();
         public IEnumerable<WeatherForecast> GetOrSet(Func<IEnumerable<WeatherForecast>> factory)
         {
-            if (_cachedValue == null)
+            IEnumerable<WeatherForecast>? cachedValue = _cachedValue;
+            if (cachedValue == null)
             {
                 lock (_syncRoot)
                 {
@@ -19,10 +20,19 @@ namespace SampleWebService.Services
                     {
                         _cachedValue = factory();
                     }
+                    cachedValue = _cachedValue;
                 }
             }
 
-            return _cachedValue;
+            return cachedValue!;
+        }
+
+        public void Empty()
+        {
+            lock (_syncRoot)
+            {
+                _cachedValue = null;
+            }
         }
     }
 }

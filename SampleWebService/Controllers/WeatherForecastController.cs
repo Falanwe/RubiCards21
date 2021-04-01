@@ -42,5 +42,10 @@ namespace SampleWebService.Controllers
             .ToArray();
         });
 
+        [HttpPost("EmptyCache")]
+        public void EmptyCache()
+        {
+            _cache.Empty();
+        }
     }
 }
