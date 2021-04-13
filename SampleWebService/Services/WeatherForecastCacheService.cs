@@ -35,5 +35,10 @@ namespace SampleWebService.Services
             }
             return Task.CompletedTask;
         }
+
+        public Task ForceCache(List<WeatherForecast> forecasts)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

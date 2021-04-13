@@ -2,14 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>04cb936b-4587-4df3-85d6-28d68ae52aa7</UserSecretsId>
+    <UserSecretsId>9aaa3177-df9b-4bd5-9a9f-a4c73935b7e4</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
-    <PackageReference Include="NEST" Version="7.12.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.2" />

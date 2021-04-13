@@ -8,5 +8,6 @@ namespace SampleWebService.Services
     {
         Task<IEnumerable<WeatherForecast>> GetOrSet(Func<IEnumerable<WeatherForecast>> factory);
         Task Empty();
+        Task ForceCache(List<WeatherForecast> forecasts);
     }
 }

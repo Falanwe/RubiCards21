@@ -7,11 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RubiCards21", "RubiCards21\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AynchroSample", "AynchroSample\AynchroSample.csproj", "{1156D0E2-C1D9-43D5-A054-821A55ABA17E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSample.Server", "NetworkSample\NetworkSample.Server.csproj", "{F20F07BC-D8B6-4327-B799-D42224BA249D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSample.Server", "NetworkSample\NetworkSample.Server.csproj", "{F20F07BC-D8B6-4327-B799-D42224BA249D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkSampleClient", "NetworkSampleClient\NetworkSampleClient.csproj", "{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSampleClient", "NetworkSampleClient\NetworkSampleClient.csproj", "{DCD0B2BA-5819-4899-9779-7C7A7EEAE601}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebService", "SampleWebService\SampleWebService.csproj", "{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWebService", "SampleWebService\SampleWebService.csproj", "{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiFuMiTournament", "ShiFuMiTournament\ShiFuMiTournament.csproj", "{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

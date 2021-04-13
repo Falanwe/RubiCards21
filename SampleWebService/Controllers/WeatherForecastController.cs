@@ -44,6 +44,12 @@ namespace SampleWebService.Controllers
             });
         }
 
+        [HttpPut]
+        public async Task ForceWeather([FromBody]List<WeatherForecast> forecasts)
+        {
+            await _cache.ForceCache(forecasts);
+        }
+
         [HttpPost("EmptyCache")]
         public async Task EmptyCache()
         {
