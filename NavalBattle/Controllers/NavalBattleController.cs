@@ -1,5 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NavalBattle.Models;
+using NavalBattle.Services;
+using System;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NavalBattle.Controllers
@@ -8,28 +13,55 @@ namespace NavalBattle.Controllers
 	[Route("[controller]")]
 	public class NavalBattleController : ControllerBase
 	{
-		[HttpGet("game")]
-		public Task<Game> GetGame()
+		private readonly ILogger<NavalBattleController> _logger;
+		private readonly INavalBattleCacheService _cache;
+
+		public NavalBattleController(
+			ILogger<NavalBattleController> logger,
+			INavalBattleCacheService cache)
 		{
-			return default;
+			_logger = logger;
+			_cache = cache;
+		}
+
+		[HttpGet("game")]
+		public async Task<NavalBattle> GetGame()
+		{
+			return await _cache.GetOrSet(() =>
+			{
+				return new NavalBattle();
+			});
 		}
 
 		[HttpGet("{gameId}")]
-		public Task<RoundState[]> GetGameState(int gameId)
+		public async Task<RoundState[]> GetGameState(int gameId)
 		{
 			return default;
 		}
 
 		[HttpPost("{gameId}")]
-		public Task<RoundState[]> Play(int gameId, [FromBody] IndividualPlay play)
+		public async Task<RoundState[]> Play(int gameId, [FromBody] IndividualPlay play)
+        {
+            // POST or GET
+            using (var client = new HttpClient())
+            {
+				var a = await HttpContext.Request.ReadFormAsync();
+				Console.WriteLine("salut");
+
+			}
+            return default;
+		}
+
+		[HttpGet("{gameId}/result")]
+		public async Task<GameResult> GetResult(int gameId)
 		{
 			return default;
 		}
 
-		[HttpGet("{gameId}/result")]
-		public Task<GameResult> GetResult(int gameId)
+		[HttpPost("EmptyCache")]
+		public async Task EmptyCache()
 		{
-			return default;
+			await _cache.Empty();
 		}
 	}
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.OpenApi.Models;
+using NavalBattle.Services;
 
 namespace NavalBattle
 {
@@ -27,12 +28,15 @@ namespace NavalBattle
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllers();
+			services.AddMvcCore().AddApiExplorer();
 
 			// Register the Swagger generator, defining 1 or more Swagger documents
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 			});
+
+			services.AddSingleton<INavalBattleCacheService, NavalBattleDatabaseService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
