@@ -2,7 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>c313151d-7d51-4739-8e0e-221cd3637627</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.1.2" />
+  </ItemGroup>
 
 
 </Project>

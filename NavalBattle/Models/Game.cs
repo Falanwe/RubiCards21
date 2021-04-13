@@ -6,9 +6,4 @@
 		public int PlayerId { get; }
 		public int RoundsCount { get; }
     }
-    public class IndividualPlay
-    {
-        public int PlayerId { get; }
-        public Play Play { get; }
-    }
 }

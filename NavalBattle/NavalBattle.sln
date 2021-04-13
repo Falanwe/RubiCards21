@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavalBattle", "NavalBattle.csproj", "{454A76B1-80BA-436C-BD37-FF8E357099B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NavalBattle", "NavalBattle.csproj", "{454A76B1-80BA-436C-BD37-FF8E357099B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShiFuMiTournament", "..\ShiFuMiTournament\ShiFuMiTournament.csproj", "{CC2DE4FE-5395-4DC6-BF2C-63420A6759FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{454A76B1-80BA-436C-BD37-FF8E357099B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{454A76B1-80BA-436C-BD37-FF8E357099B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{454A76B1-80BA-436C-BD37-FF8E357099B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC2DE4FE-5395-4DC6-BF2C-63420A6759FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC2DE4FE-5395-4DC6-BF2C-63420A6759FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC2DE4FE-5395-4DC6-BF2C-63420A6759FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC2DE4FE-5395-4DC6-BF2C-63420A6759FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
