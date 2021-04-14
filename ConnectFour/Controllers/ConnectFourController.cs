@@ -16,18 +16,21 @@ namespace ConnectFour.Controllers
             [HttpGet("game")]
             public Task<Game> GetGame()
             {
+                //Mettre la logique
                 throw new NotImplementedException();
             }
 
             [HttpGet("{gameId}")]
             public Task<GameState> GetGameState(int gameId)
             {
+                //Mettre la logique
                 throw new NotImplementedException();
             }
 
             [HttpPost("{gameId}")]
             public Task<TileState[]> GetGameState(int gameId, [FromBody] IndividualPlay player)
             {
+                //Mettre la logique
                 throw new NotImplementedException();
             }
         }
