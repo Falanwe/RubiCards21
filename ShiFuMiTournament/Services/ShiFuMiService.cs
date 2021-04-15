@@ -31,9 +31,9 @@ namespace ShiFuMiTournament.Services
             {
                 record = new GameRecord { PlayerCount = 1 };
                 var indexResponse = await _client.IndexDocumentAsync(new { PlayerCount = 1 });
-                playerId = 0;
                 record.Id = indexResponse.Id;
                 await _client.IndexDocumentAsync(record);
+                playerId = 0;
             }
             else
             {
@@ -68,7 +68,7 @@ namespace ShiFuMiTournament.Services
             var p1won = 0;
             var p2won = 0;
             var ties = 0;
-            foreach(var state in gameState)
+            foreach (var state in gameState)
             {
                 switch (state)
                 {
@@ -85,6 +85,10 @@ namespace ShiFuMiTournament.Services
                     case RoundState.Tie:
                         {
                             ties++;
+                            break;
+                        }
+                    default:
+                        {
                             break;
                         }
                 }

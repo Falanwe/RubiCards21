@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetworkSampleClient", "Netw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleWebService", "SampleWebService\SampleWebService.csproj", "{D0F66F38-DA09-412B-B680-3E0C3F80DAF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiFuMiTournament", "ShiFuMiTournament\ShiFuMiTournament.csproj", "{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShiFuMiTournament", "ShiFuMiTournament\ShiFuMiTournament.csproj", "{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShifumiTournament.Client", "ShifumiTournament.Client\ShifumiTournament.Client.csproj", "{929CF8F9-56BA-45C5-9B44-BF8ADD91BF66}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8A95CEC-DE6D-4BB3-94A7-AFB67A3E4722}.Release|Any CPU.Build.0 = Release|Any CPU
+		{929CF8F9-56BA-45C5-9B44-BF8ADD91BF66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{929CF8F9-56BA-45C5-9B44-BF8ADD91BF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{929CF8F9-56BA-45C5-9B44-BF8ADD91BF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{929CF8F9-56BA-45C5-9B44-BF8ADD91BF66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
