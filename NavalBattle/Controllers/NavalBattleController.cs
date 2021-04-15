@@ -13,21 +13,21 @@ namespace NavalBattle.Controllers
 	[Route("[controller]")]
 	public class NavalBattleController : ControllerBase
 	{
-		private readonly ILogger<NavalBattleController> _logger;
-		private readonly INavalBattleCacheService _cache;
+		private readonly ILogger<NavalBattleController> logger;
+		private readonly INavalBattleService service;
 
 		public NavalBattleController(
 			ILogger<NavalBattleController> logger,
-			INavalBattleCacheService cache)
+			INavalBattleService cache)
 		{
-			_logger = logger;
-			_cache = cache;
+			this.logger = logger;
+			service = cache;
 		}
 
 		[HttpGet("game")]
 		public async Task<NavalBattle> GetGame()
 		{
-			return await _cache.GetOrSet(() =>
+			return await service.GetOrSet(() =>
 			{
 				return new NavalBattle();
 			});
@@ -61,7 +61,7 @@ namespace NavalBattle.Controllers
 		[HttpPost("EmptyCache")]
 		public async Task EmptyCache()
 		{
-			await _cache.Empty();
+			await service.Empty();
 		}
 	}
 }

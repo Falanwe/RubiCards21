@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace NavalBattle.Services
 {
-	public class NavalBattleDatabaseService : INavalBattleCacheService
+	public class NavalBattleDatabaseService : INavalBattleService
     {
         public class CacheRecord
         {

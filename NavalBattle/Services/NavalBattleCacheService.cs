@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace NavalBattle.Services
 {
-	internal class NavalBattleCacheService : INavalBattleCacheService
+	internal class NavalBattleCacheService : INavalBattleService
     {
         private NavalBattle _cachedValue;
         private readonly object _syncRoot = new object();

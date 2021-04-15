@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace NavalBattle.Services
 {
-	public interface INavalBattleCacheService
+	public interface INavalBattleService
 	{
 		Task<NavalBattle> GetOrSet(Func<NavalBattle> factory);
 		Task Empty();
