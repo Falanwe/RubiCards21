@@ -18,22 +18,22 @@ namespace ConnectFour.Controllers
             private int lastGameId = 0;
 
             [HttpGet("game")]
-            public async Task<GameForm> GetGame()
+            public async Task<IActionResult> GetGame()
             {
                 if(emptySlotGame==null)
                 {
                     lastGameId++;
                     emptySlotGame = new Game(lastGameId);
 
-                    //return Ok(await new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 1 });
-
+                    return Ok(await Task.FromResult(new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 1 }));
                 }
                 else
                 {
                     currentGames.Add(emptySlotGame.gameId, emptySlotGame);
+                    return Ok(await Task.FromResult(new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 2 }));
                 }
 
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
 
             [HttpGet("{gameId}")]
