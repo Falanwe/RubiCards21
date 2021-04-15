@@ -13,22 +13,38 @@ namespace ConnectFour.Controllers
         [Route("[controller]")]
         public class ConnectFour : ControllerBase
         {
+            private Dictionary<int, Game> currentGames;
+            private Game emptySlotGame;
+            private int lastGameId = 0;
+
             [HttpGet("game")]
-            public Task<Game> GetGame()
+            public async Task<GameForm> GetGame()
             {
-                //Mettre la logique
+                if(emptySlotGame==null)
+                {
+                    lastGameId++;
+                    emptySlotGame = new Game(lastGameId);
+
+                    //return Ok(await new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 1 });
+
+                }
+                else
+                {
+                    currentGames.Add(emptySlotGame.gameId, emptySlotGame);
+                }
+
                 throw new NotImplementedException();
             }
 
             [HttpGet("{gameId}")]
-            public Task<GameState> GetGameState(int gameId)
+            public async Task<GameState> GetGameState(int gameId)
             {
                 //Mettre la logique
                 throw new NotImplementedException();
             }
 
             [HttpPost("{gameId}")]
-            public Task<TileState[]> GetGameState(int gameId, [FromBody] IndividualPlay player)
+            public async Task<TileState[]> GetGameState(int gameId, [FromBody] IndividualPlay player)
             {
                 //Mettre la logique
                 throw new NotImplementedException();

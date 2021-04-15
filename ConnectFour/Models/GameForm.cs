@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace ConnectFour.Models
 {
-    public class Game
+    public struct GameForm
     {
-        public Game(int newId) { gameId = newId; }
-
-        public int gameId;
-        public TileState[] board;
+        public int GameId;
+        public int PlayerId;
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ConnectFour.Models
 {
-    public class IndividualPlay
+    public struct IndividualPlay
     {
         public int PlayerId { get; }
         public int Column { get; }
