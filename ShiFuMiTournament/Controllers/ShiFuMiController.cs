@@ -20,26 +20,26 @@ namespace ShiFuMiTournament.Controllers
             _service = service;
         }
 
-        [HttpGet("game")]
+        [HttpGet("game", Name =nameof(GetGame))]
         public async Task<Game> GetGame()
         {
             return await _service.GetGame();
         }
 
-        [HttpGet("{gameId}")]
+        [HttpGet("{gameId}", Name = nameof(GetGameState))]
         public async Task<RoundState[]> GetGameState(string gameId)
         {
             return await _service.GetGameState(gameId);
         }
 
-        [HttpPost("{gameId}")]
+        [HttpPost("{gameId}", Name = nameof(Play))]
         public async Task<RoundState[]> Play(string gameId, [FromBody]IndividualPlay play)
         {
             await _service.Play(gameId, play);
             return await _service.GetGameState(gameId);
         }
 
-        [HttpGet("{gameId}/result")]
+        [HttpGet("{gameId}/result", Name = nameof(GetResult))]
         public async Task<GameResult> GetResult(string gameId)
         {
             return await _service.GetResult(gameId);

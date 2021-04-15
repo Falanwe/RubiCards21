@@ -17,8 +17,10 @@ namespace ShiFuMiTournament.Services
         {
             _settings = settings.Value;
 
-            var connectionSettings = new ConnectionSettings(new Uri("http://localhost:9200"));
+            var connectionSettings = new ConnectionSettings(new Uri(_settings.ElasticSearchEndpoint));
             connectionSettings.DefaultIndex("shifumi");
+            connectionSettings.BasicAuthentication("elastic", _settings.ElasticPassword);
+            connectionSettings.ServerCertificateValidationCallback((_, _, _, _) => true);
             _client = new ElasticClient(connectionSettings);
         }
 
