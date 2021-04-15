@@ -11,5 +11,6 @@ namespace ConnectFour.Models
 
         public int gameId;
         public TileState[] board;
+        public IndividualPlay[] plays;
     }
 }

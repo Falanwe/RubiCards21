@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ConnectFour.Models;
+using ConnectFour.Services;
 
 namespace ConnectFour.Controllers
 {
@@ -15,37 +16,31 @@ namespace ConnectFour.Controllers
         private Game emptySlotGame;
         private int lastGameId = 0;
 
+        private readonly IConnectFourService connectFourService;
+
         [HttpGet("game")]
-        public async Task<IActionResult> GetGame()
+        public async Task<GameForm> GetGame()
         {
-            if (emptySlotGame == null)
-            {
-                lastGameId++;
-                emptySlotGame = new Game(lastGameId);
-
-                return Ok(await Task.FromResult(new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 1 }));
-            }
-            else
-            {
-                currentGames.Add(emptySlotGame.gameId, emptySlotGame);
-                return Ok(await Task.FromResult(new GameForm() { GameId = emptySlotGame.gameId, PlayerId = 2 }));
-            }
-
-            //throw new NotImplementedException();
+            return await connectFourService.GetGame();
         }
 
         [HttpGet("{gameId}")]
         public async Task<GameState> GetGameState(int gameId)
         {
-            //Mettre la logique
-            throw new NotImplementedException();
+            return await connectFourService.GetGameState(gameId);
         }
 
         [HttpPost("{gameId}")]
-        public async Task<TileState[]> GetGameState(int gameId, [FromBody] IndividualPlay player)
+        public async Task<GameState> Play(int gameId, IndividualPlay move)
         {
-            //Mettre la logique
-            throw new NotImplementedException();
+            await connectFourService.Play(gameId, move);
+            return await connectFourService.GetGameState(gameId);
+        }
+
+        [HttpGet("{gameId}/result")]
+        public async Task<IndividualPlay[]> GetPlays(int gameId)
+        {
+            return await connectFourService.GetPlays(gameId);
         }
     }
 }
