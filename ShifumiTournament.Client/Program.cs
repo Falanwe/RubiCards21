@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ShifumiTournament.Client
@@ -8,8 +9,8 @@ namespace ShifumiTournament.Client
     {
         static async Task Main(string[] args)
         {
-            var shifumi = new ShifumiService();
-            var game = await shifumi.FindGame();
+            var client = new shifumiTournamentClient("http://34.90.243.63/", new HttpClient());
+            var game = await client.GetGameAsync();
             Console.WriteLine(JsonConvert.SerializeObject(game));
         }
     }
