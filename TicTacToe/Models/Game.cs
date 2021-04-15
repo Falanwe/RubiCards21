@@ -4,9 +4,19 @@ namespace TicTacToe.Models
 {
     public class Game
     {
-        public Game() { gameId = Guid.NewGuid().ToString(); }
+        public Game() 
+        {
+            gameId = Guid.NewGuid().ToString();
+
+            isDone = false;
+            isP2Turn = true;
+            board = new TileState[9];
+        }
 
         public string gameId;
-        public TileState[,] board = new TileState[3,3];
+
+        public bool isDone;
+        public bool isP2Turn;
+        public TileState[] board = new TileState[9];
     }
 }

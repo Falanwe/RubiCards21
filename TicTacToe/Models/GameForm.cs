@@ -2,7 +2,8 @@
 {
     public struct GameForm
     {
-        public string gameId;
-        public int playerId;
+        public string GameId { get; set; }
+        public int PlayerId { get; set; }
+
     }
 }

@@ -11,16 +11,16 @@ namespace TicTacToe.Controllers
     [Route("[controller]")]
     public class TicTacToeController : Controller
     {
-        private Game lastCreatedGame;
-        private Dictionary<string, Game> games = new Dictionary<string, Game>();
+        private static Game lastCreatedGame;
+        private static Dictionary<string, Game> games = new Dictionary<string, Game>();
 
         [HttpGet("game")]
         public async Task<IActionResult> GetGame()
         {
             if (lastCreatedGame == null)
-            {
-                lastCreatedGame = new Game();
-                return Ok(await Task.FromResult(new GameForm() { gameId = lastCreatedGame.gameId, playerId = 1}));
+            {            
+                   lastCreatedGame = new Game();
+                return Ok(await Task.FromResult(new GameForm() { GameId = lastCreatedGame.gameId, PlayerId = 1}));
             }
             else
             {
@@ -28,12 +28,12 @@ namespace TicTacToe.Controllers
                 var id = lastCreatedGame.gameId;
 
                 lastCreatedGame = null;
-                return Ok(await Task.FromResult(new GameForm() { gameId = id, playerId = 2}));
+                return Ok(await Task.FromResult(new GameForm() { GameId = id, PlayerId = 2}));
             }
         }
 
         [HttpGet("{gameId}")]
-        [Produces(typeof(TileState[,]))]
+        [Produces(typeof(TileState[]))]
         public async Task<IActionResult> GetBoard(string gameId)
         {
             if (games.TryGetValue(gameId, out var game)) return Ok(await Task.FromResult(game.board));
@@ -45,8 +45,17 @@ namespace TicTacToe.Controllers
         {
             if (games.TryGetValue(gameId, out var game))
             {
-                if (game.board[play.x, play.y] != TileState.Empty) return BadRequest();
-                else return Ok(await Task.FromResult(game.board));
+                if (game.isDone || play.playerId - 1 != Convert.ToInt32(game.isP2Turn)) return BadRequest();
+
+                game.isP2Turn = !game.isP2Turn;
+                var index = play.y * 3 + play.x;
+
+                if (game.board[index] != TileState.Empty) return BadRequest();
+                else
+                {
+                    game.board[index] = play.playerId == 1 ? TileState.P1 : TileState.P2;
+                    return Ok(await Task.FromResult(game.board));
+                }
             }
             else return NotFound();
         }
@@ -58,43 +67,54 @@ namespace TicTacToe.Controllers
             {
                 var board = game.board;
                 var selection = new TileState[3];
-                var result = 0;
-
-                for (var x = 0; x < board.GetLength(0); x++)
+                byte result = 0;
+           
+                for (var x = 0; x < 3; x++)
                 {
-                    selection[0] = board[x, 0];
-                    selection[1] = board[x, 1];
-                    selection[2] = board[x, 2];
+                    selection[0] = board[x.Xto2D(0)];
+                    selection[1] = board[x.Xto2D(1)];
+                    selection[2] = board[x.Xto2D(2)];
 
-                    result = GetMatch(selection);
-                    if (result != 0) return Ok(await Task.FromResult(result));
+                    if (TryEndGame(game, selection, out result)) return Ok(await Task.FromResult(result));
                 }
 
-                for (var y = 0; y < board.GetLength(0); y++)
+                for (var y = 0; y < 3; y++)
                 {
-                    selection[0] = board[0, y];
-                    selection[1] = board[1, y];
-                    selection[2] = board[2, y];
+                    selection[0] = board[y.Yto2D(0)];
+                    selection[1] = board[y.Yto2D(1)];
+                    selection[2] = board[y.Yto2D(2)];
 
-                    result = GetMatch(selection);
-                    if (result != 0) return Ok(await Task.FromResult(result));
+                    if (TryEndGame(game, selection, out result)) return Ok(await Task.FromResult(result));
                 }
 
-                selection[0] = board[0, 0];
-                selection[1] = board[1, 1];
-                selection[2] = board[2, 2];
+                selection[0] = board[0];
+                selection[1] = board[1 * 3 + 1];
+                selection[2] = board[2 * 3 + 2];
 
-                result = GetMatch(selection);
-                if (result != 0) return Ok(await Task.FromResult(result));
+                if (TryEndGame(game, selection, out result)) return Ok(await Task.FromResult(result));
 
-                selection[0] = board[0, 2];
-                selection[1] = board[1, 1];
-                selection[2] = board[2, 0];
+                selection[0] = board[2 * 3];
+                selection[1] = board[1 * 3 + 1];
+                selection[2] = board[2];
 
-                result = GetMatch(selection);
+                TryEndGame(game, selection, out result);
                 return Ok(await Task.FromResult(result));
             }
             else return NotFound();
+        }
+
+        private bool TryEndGame(Game game, TileState[] selection, out byte output)
+        {
+            var result = GetMatch(selection);
+            output = result;
+
+            if (result != 0)
+            {
+                game.isDone = true;
+                return true;
+            }
+            else return false;
+                    
         }
 
         private byte GetMatch(TileState[] tileStates)
@@ -108,6 +128,19 @@ namespace TicTacToe.Controllers
             }
 
             return (byte)result;
+        }
+    }
+
+    public static class Extensions
+    {
+        public static int Xto2D(this int x, int y)
+        {
+            return y * 3 + x;
+        }
+
+        public static int Yto2D(this int y, int x)
+        {
+            return y * 3 + x;
         }
     }
 }
