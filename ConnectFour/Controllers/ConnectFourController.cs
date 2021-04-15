@@ -12,10 +12,6 @@ namespace ConnectFour.Controllers
     [Route("[controller]")]
     public class ConnectFourController : ControllerBase
     {
-        private Dictionary<int, Game> currentGames;
-        private Game emptySlotGame;
-        private int lastGameId = 0;
-
         private readonly IConnectFourService connectFourService;
 
         [HttpGet("game")]
@@ -38,7 +34,7 @@ namespace ConnectFour.Controllers
         }
 
         [HttpGet("{gameId}/result")]
-        public async Task<IndividualPlay[]> GetPlays(int gameId)
+        public async Task<List<IndividualPlay>> GetPlays(int gameId)
         {
             return await connectFourService.GetPlays(gameId);
         }

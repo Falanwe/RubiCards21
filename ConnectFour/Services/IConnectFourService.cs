@@ -10,7 +10,7 @@ namespace ConnectFour.Services
     {
         Task<GameForm> GetGame();
         Task<GameState> GetGameState(int gameId);
-        Task Play(int gameId, IndividualPlay move);
-        Task<IndividualPlay[]> GetPlays(int gameId);
+        Task<List<IndividualPlay>> Play(int gameId, IndividualPlay move);
+        Task<List<IndividualPlay>> GetPlays(int gameId);
     }
 }

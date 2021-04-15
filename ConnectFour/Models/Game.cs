@@ -7,10 +7,9 @@ namespace ConnectFour.Models
 {
     public class Game
     {
-        public Game(int newId) { gameId = newId; }
-
-        public int gameId;
-        public TileState[] board;
-        public IndividualPlay[] plays;
+        public string gameId;
+        public int PlayerCount;
+        public GameState currentState;
+        public List<IndividualPlay> plays = new List<IndividualPlay>();
     }
 }
