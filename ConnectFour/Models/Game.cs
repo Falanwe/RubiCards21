@@ -9,7 +9,7 @@ namespace ConnectFour.Models
     {
         public string gameId;
         public int PlayerCount;
-        public GameState currentState;
+        public GameState currentState = GameState.NoOnePlaying;
         public List<IndividualPlay> plays = new List<IndividualPlay>();
     }
 }

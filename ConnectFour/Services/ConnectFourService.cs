@@ -38,6 +38,7 @@ namespace ConnectFour.Services
                 record.PlayerCount = 2;
                 await client.IndexDocumentAsync(record);
                 playerId = 1;
+                record.currentState = GameState.PlayerOnePlaying;
             }
             return new GameForm(record.gameId, playerId);
         }
