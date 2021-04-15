@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ShiFuMiTournament.Services;
 
 namespace ShiFuMiTournament
 {
@@ -27,6 +28,9 @@ namespace ShiFuMiTournament
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.Configure<AppSettings>(Configuration);
+
+            services.AddTransient<IShiFuMiService, ShiFuMiService>();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

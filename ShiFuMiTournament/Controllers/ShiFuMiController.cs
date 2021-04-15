@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ShiFuMiTournament.Models;
+using ShiFuMiTournament.Services;
 
 namespace ShiFuMiTournament.Controllers
 {
@@ -12,28 +13,36 @@ namespace ShiFuMiTournament.Controllers
     [Route("[controller]")]
     public class ShiFuMiController : ControllerBase
     {
-        [HttpGet("game")]
-        public Task<Game> GetGame()
+        private readonly IShiFuMiService _service;
+
+        public ShiFuMiController(IShiFuMiService service)
         {
-            throw new NotImplementedException();
+            _service = service;
+        }
+
+        [HttpGet("game")]
+        public async Task<Game> GetGame()
+        {
+            return await _service.GetGame();
         }
 
         [HttpGet("{gameId}")]
-        public Task<RoundState[]> GetGameState(int gameId)
+        public async Task<RoundState[]> GetGameState(string gameId)
         {
-            throw new NotImplementedException();
+            return await _service.GetGameState(gameId);
         }
 
         [HttpPost("{gameId}")]
-        public Task<RoundState[]> Play(int gameId, [FromBody]IndividualPlay play)
+        public async Task<RoundState[]> Play(string gameId, [FromBody]IndividualPlay play)
         {
-            throw new NotImplementedException();
+            await _service.Play(gameId, play);
+            return await _service.GetGameState(gameId);
         }
 
         [HttpGet("{gameId}/result")]
-        public Task<GameResult> GetResult(int gameId)
+        public async Task<GameResult> GetResult(string gameId)
         {
-            throw new NotImplementedException();
+            return await _service.GetResult(gameId);
         }
     }
 }

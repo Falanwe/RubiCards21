@@ -7,7 +7,7 @@ namespace ShiFuMiTournament.Models
 {
     public class IndividualPlay
     {
-        public int PlayerId { get; }
-        public Play Play { get; }
+        public int PlayerId { get; set; }
+        public Play Play { get; set; }
     }
 }

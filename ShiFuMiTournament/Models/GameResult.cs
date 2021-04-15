@@ -7,6 +7,14 @@ namespace ShiFuMiTournament.Models
 {
     public class GameResult
     {
+        public GameResult(bool isFinished, int p1Won, int p2won, int ties)
+        {
+            IsFinished = isFinished;
+            P1Won = p1Won;
+            P2Won = p2won;
+            Ties = ties;
+        }
+
         public bool IsFinished { get; }
         public int P1Won { get; }
         public int P2Won { get; }

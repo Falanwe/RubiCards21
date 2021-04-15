@@ -7,7 +7,13 @@ namespace ShiFuMiTournament.Models
 {
     public class Game
     {
-        public int GameId { get; }
+        public Game(string gameId, int playerId, int roundsCount)
+        {
+            GameId = gameId;
+            PlayerId = playerId;
+            RoundsCount = roundsCount;
+        }
+        public string GameId { get; }
         public int PlayerId { get; }
         public int RoundsCount { get; }
     }
