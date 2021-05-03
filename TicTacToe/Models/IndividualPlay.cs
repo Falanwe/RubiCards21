@@ -2,8 +2,8 @@
 {
     public struct IndividualPlay
     {
-        public int x { get; set; }
-        public int y { get; set; }
-        public int playerId { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int PlayerId { get; set; }
     }
 }
