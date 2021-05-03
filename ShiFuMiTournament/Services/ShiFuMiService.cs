@@ -1,9 +1,13 @@
 ﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Nest;
 using ShiFuMiTournament.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ShiFuMiTournament.Services
@@ -45,7 +49,16 @@ namespace ShiFuMiTournament.Services
                 playerId = 1;
             }
 
-            return new Game(record.Id, playerId, _settings.RoundsCount);
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecurityKey));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            var token = new JwtSecurityToken(issuer: "ShiFuMi", audience: "ShiFuMi",
+                claims: new[]
+                {
+                    new Claim("game", record.Id),
+                    new Claim("playerId", playerId.ToString())
+                }, notBefore: DateTime.UtcNow, expires: DateTime.UtcNow + TimeSpan.FromHours(1), signingCredentials: credentials);
+
+            return new Game(record.Id, playerId, _settings.RoundsCount, token.ToString());
         }
 
         public async Task<RoundState[]> GetGameState(string gameId)

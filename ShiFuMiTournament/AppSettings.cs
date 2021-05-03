@@ -10,5 +10,6 @@ namespace ShiFuMiTournament
         public int RoundsCount { get; set; }
         public string ElasticSearchEndpoint { get; set; }
         public string ElasticPassword { get; set; }
+        public string SecurityKey { get; set; }
     }
 }
