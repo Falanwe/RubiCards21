@@ -16,6 +16,8 @@ namespace ShiFuMiTournament.Services
     {
         private readonly AppSettings _settings;
         private readonly ElasticClient _client;
+        private readonly Lazy<SigningCredentials> _credentials;
+        private readonly Lazy<JwtSecurityTokenHandler> _jwtTokenHandler = new Lazy<JwtSecurityTokenHandler>(() => new JwtSecurityTokenHandler());
 
         public ShiFuMiService(IOptions<AppSettings> settings)
         {
@@ -26,6 +28,12 @@ namespace ShiFuMiTournament.Services
             connectionSettings.BasicAuthentication("elastic", _settings.ElasticPassword);
             connectionSettings.ServerCertificateValidationCallback((o, certificate, chain, errors) => true);
             _client = new ElasticClient(connectionSettings);
+
+            _credentials = new Lazy<SigningCredentials>(() =>
+            {
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecurityKey));
+                return new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            });
         }
 
         public async Task<Game> GetGame()
@@ -49,16 +57,14 @@ namespace ShiFuMiTournament.Services
                 playerId = 1;
             }
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecurityKey));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-            var token = new JwtSecurityToken(issuer: "ShiFuMi", audience: "ShiFuMi",
+             var token = new JwtSecurityToken(issuer: "ShiFuMi", audience: "ShiFuMi",
                 claims: new[]
                 {
                     new Claim("game", record.Id),
                     new Claim("playerId", playerId.ToString())
-                }, notBefore: DateTime.UtcNow, expires: DateTime.UtcNow + TimeSpan.FromHours(1), signingCredentials: credentials);
+                }, notBefore: DateTime.UtcNow, expires: DateTime.UtcNow + TimeSpan.FromHours(1), signingCredentials: _credentials.Value);
 
-            return new Game(record.Id, playerId, _settings.RoundsCount, token.ToString());
+            return new Game(record.Id, playerId, _settings.RoundsCount, _jwtTokenHandler.Value.WriteToken(token));
         }
 
         public async Task<RoundState[]> GetGameState(string gameId)
@@ -114,10 +120,27 @@ namespace ShiFuMiTournament.Services
 
         public async Task Play(string gameId, IndividualPlay play)
         {
-            var record = (await _client.GetAsync<GameRecord>(gameId)).Source;
-            switch (play.PlayerId)
+            var validationParameters = new TokenValidationParameters
             {
-                case 0:
+                ValidateIssuer = true,
+                ValidIssuer = "ShiFuMi",
+                ValidateAudience = true,
+                ValidAudience = "ShiFuMi",
+                ValidateLifetime = true,
+                IssuerSigningKey = _credentials.Value.Key
+            };
+
+            var principal = _jwtTokenHandler.Value.ValidateToken(play.Token, validationParameters, out _);
+
+            if(principal.FindFirstValue("game") != gameId)
+            {
+                throw new InvalidOperationException("You don't have the right to access this game!");
+            }
+
+            var record = (await _client.GetAsync<GameRecord>(gameId)).Source;
+            switch (principal.FindFirstValue("playerID"))
+            {
+                case "0":
                     {
                         if (record.Player1Plays.Count < _settings.RoundsCount)
                         {
@@ -126,7 +149,7 @@ namespace ShiFuMiTournament.Services
                         }
                         break;
                     }
-                case 1:
+                case "1":
                     {
                         if (record.Player2Plays.Count < _settings.RoundsCount)
                         {

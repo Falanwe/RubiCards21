@@ -10,7 +10,7 @@ namespace ShiFuMiTournament.Controllers
     [Route("")]
     public class HealthCheckController : Controller
     {
-
+        [HttpGet]
         public IActionResult Get()
         {
             return Ok("it works!");
