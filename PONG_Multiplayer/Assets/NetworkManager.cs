@@ -27,16 +27,17 @@ public class NetworkManager : MonoBehaviour
         if (IsHost)
         {
             _udpClient = new UdpClient(Port);
-            _receivingTask = ReceiveAsync();
         }
         else
         {
             _udpClient = new UdpClient();
         }
 
-        if(!IsHost)
+        _receivingTask = ReceiveAsync();
+
+        if (!IsHost)
         {
-            _otherPlayer = new IPEndPoint(IPAddress.Parse(Host), Port);            
+            _otherPlayer = new IPEndPoint(IPAddress.Parse(Host), Port);
 
             //code to test connectivity
             StartCoroutine(SendPingPeriodically());
@@ -45,21 +46,21 @@ public class NetworkManager : MonoBehaviour
 
     private IEnumerator SendPingPeriodically()
     {
-        while(_isRunning)
+        while (_isRunning)
         {
-            Send(Encoding.UTF8.GetBytes("Ping!"));
+            var _ = Send(Encoding.UTF8.GetBytes("Ping!"));
             yield return new WaitForSeconds(2);
         }
     }
 
     private async Task ReceiveAsync()
     {
-        while(_isRunning)
+        while (_isRunning)
         {
             var result = await _udpClient.ReceiveAsync();
-            if(_otherPlayer == null)
+            if (_otherPlayer == null)
             {
-                _otherPlayer = result.RemoteEndPoint;                
+                _otherPlayer = result.RemoteEndPoint;
             }
             _receivedDatagrams.Enqueue(result.Buffer);
         }
@@ -68,30 +69,26 @@ public class NetworkManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        while(_receivedDatagrams.TryDequeue(out var data))
+        while (_receivedDatagrams.TryDequeue(out var data))
         {
             ProcessDataGram(data);
         }
     }
 
-    public void Send(byte[] data)
+    public async Task Send(byte[] data)
     {
-        if(_otherPlayer != null)
+        if (_otherPlayer != null)
         {
-            _udpClient.Send(data, data.Length, _otherPlayer);
-            if(_receivingTask == null)
-            {
-                _receivingTask = ReceiveAsync();
-            }
+            await _udpClient.SendAsync(data, data.Length, _otherPlayer);
         }
     }
 
     private void ProcessDataGram(byte[] data)
     {
         Debug.Log(Encoding.UTF8.GetString(data));
-        if(IsHost)
+        if (IsHost)
         {
-            Send(Encoding.UTF8.GetBytes("Pong!"));
+            var _ = Send(Encoding.UTF8.GetBytes("Pong!"));
         }
     }
 }
