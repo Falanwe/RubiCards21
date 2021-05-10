@@ -21,6 +21,28 @@ public class NetworkManager : MonoBehaviour
     private readonly ConcurrentQueue<byte[]> _receivedDatagrams = new ConcurrentQueue<byte[]>();
     private Task _receivingTask;
 
+    public Transform RedPaddle;
+    public Transform BluePaddle;
+    public Transform Ball;
+
+    private byte[] _sendBuffer;
+
+    private void Awake()
+    {
+        if(IsHost)
+        {
+            RedPaddle.GetComponent<Paddle>().enabled = false;
+            _sendBuffer = new byte[12];
+        }
+        else
+        {
+            BluePaddle.GetComponent<Paddle>().enabled = false;
+            Ball.GetComponent<Ball>().enabled = false;
+
+            _sendBuffer = new byte[4];
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,18 +60,6 @@ public class NetworkManager : MonoBehaviour
         if (!IsHost)
         {
             _otherPlayer = new IPEndPoint(IPAddress.Parse(Host), Port);
-
-            //code to test connectivity
-            StartCoroutine(SendPingPeriodically());
-        }
-    }
-
-    private IEnumerator SendPingPeriodically()
-    {
-        while (_isRunning)
-        {
-            var _ = Send(Encoding.UTF8.GetBytes("Ping!"));
-            yield return new WaitForSeconds(2);
         }
     }
 
@@ -73,6 +83,19 @@ public class NetworkManager : MonoBehaviour
         {
             ProcessDataGram(data);
         }
+
+        if(IsHost)
+        {
+            BitConverter.GetBytes(Ball.position.x).CopyTo(_sendBuffer, 0);
+            BitConverter.GetBytes(Ball.position.z).CopyTo(_sendBuffer, 4);
+            BitConverter.GetBytes(BluePaddle.position.z).CopyTo(_sendBuffer, 8);
+
+            var _ = Send(_sendBuffer);
+        }
+        else
+        {
+            var _ = Send(BitConverter.GetBytes(RedPaddle.position.z));
+        }
     }
 
     public async Task Send(byte[] data)
@@ -85,10 +108,27 @@ public class NetworkManager : MonoBehaviour
 
     private void ProcessDataGram(byte[] data)
     {
-        Debug.Log(Encoding.UTF8.GetString(data));
-        if (IsHost)
+        if(IsHost)
         {
-            var _ = Send(Encoding.UTF8.GetBytes("Pong!"));
+            var redPaddlePosition = RedPaddle.position;
+            redPaddlePosition.z = BitConverter.ToSingle(data, 0);
+            RedPaddle.position = redPaddlePosition;
         }
+        else
+        {
+            var ballPosition = Ball.position;
+            ballPosition.x = BitConverter.ToSingle(data, 0);
+            ballPosition.z = BitConverter.ToSingle(data, 4);
+            Ball.position = ballPosition;
+
+            var bluePaddlePosition = BluePaddle.position;
+            bluePaddlePosition.z = BitConverter.ToSingle(data, 8);
+            BluePaddle.position = bluePaddlePosition;
+        }
+    }
+
+    private void OnApplicationQuit()
+    {
+        _udpClient.Close();
     }
 }
